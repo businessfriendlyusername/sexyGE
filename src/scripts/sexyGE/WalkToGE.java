@@ -1,9 +1,7 @@
 package scripts.sexyGE;
 
 import org.tribot.api2007.Interfaces;
-import org.tribot.api2007.Player;
 import org.tribot.api2007.WebWalking;
-import org.tribot.api2007.types.RSTile;
 import scripts.API.BelvisGE.BelvisGE;
 import scripts.API.Node;
 

@@ -2,16 +2,10 @@ package scripts;
 
 import org.tribot.api.General;
 import org.tribot.api2007.GrandExchange;
+import org.tribot.api2007.Inventory;
 import org.tribot.api2007.types.RSGEOffer;
 import org.tribot.script.Script;
-import scripts.API.BelvisGE.Offer;
-import scripts.API.BelvisGE.Offers;
-import scripts.API.Node;
-import scripts.sexyGE.MakeOffer;
-import scripts.sexyGE.WalkToGE;
-
-import java.util.Collections;
-import java.util.LinkedList;
+import scripts.API.BelvisGE.PriceLookup;
 
 public class SexyGE extends Script {
 
@@ -28,11 +22,16 @@ public class SexyGE extends Script {
 //            }
 //        }
 //    }
-        while (true) {
+//        while (true) {
+//            General.sleep(1000);
+//            for (RSGEOffer offer : GrandExchange.getOffers()) {
+//                System.out.println(offer.getItemName() + " " + offer.getPrice() + " " + offer.getStatus());
+//            }
+//        }
+
+        while(true){
             General.sleep(1000);
-            for (RSGEOffer offer : GrandExchange.getOffers()) {
-                System.out.println(offer.getItemName() + " " + offer.getPrice() + " " + offer.getStatus());
-            }
+            System.out.println(PriceLookup.getPrice(Inventory.find("Feather")[0].getID()));
         }
     }
 }
