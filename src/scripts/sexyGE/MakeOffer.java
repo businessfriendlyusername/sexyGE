@@ -28,6 +28,7 @@ public class MakeOffer extends Node {
             Timing.waitCondition(new BooleanSupplier() {
                 @Override
                 public boolean getAsBoolean() {
+                    General.sleep(100);
                     return BelvisGE.isOpen();
                 }
             }, General.random(4000, 6000));
