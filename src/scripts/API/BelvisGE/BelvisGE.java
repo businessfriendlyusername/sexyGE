@@ -7,6 +7,9 @@ import org.tribot.api2007.types.RSGEOffer;
 import org.tribot.api2007.types.RSInterface;
 import org.tribot.api2007.types.RSTile;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BelvisGE {
 
     public static final RSTile GELoc = new RSTile(3164, 3487, 0);
@@ -31,6 +34,26 @@ public class BelvisGE {
 
     public static boolean isOpen(){
          return Interfaces.get(465) != null;
+    }
+
+    public static OfferSlot[] getAllCompleteOffers(){
+        RSGEOffer[] offers = GrandExchange.getOffers();
+        LinkedList<OfferSlot> indicies = new LinkedList<OfferSlot>();
+        if(offers == null)
+            return null;
+        for(int i = 0; i < 8; i++){
+            if(offers[i].getStatus() == RSGEOffer.STATUS.CANCELLED ||
+                    offers[i].getStatus() == RSGEOffer.STATUS.COMPLETED){
+                indicies.add(new OfferSlot(i));
+            }
+        }
+        if(indicies.size() == 0)
+            return null;
+        OfferSlot completed[] = new OfferSlot[indicies.size()];
+        for(int i = 0; i < completed.length; i++){
+            completed[i] = indicies.pop();
+        }
+        return completed;
     }
 
     public static OfferSlot getOpenSlot(boolean f2p){

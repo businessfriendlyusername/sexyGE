@@ -119,6 +119,27 @@ public class Offer {
             return false;
     }
 
+    private void collectOffer(){
+        for(OfferSlot slot : BelvisGE.getAllCompleteOffers()){
+            RSInterface slotInterface = Interfaces.get(BelvisGE.GEInterfaceID, slot.getSlotInterfaceChildID(), slot.getViewID());
+            if(slotInterface == null)
+                return;
+            slotInterface.click("View offer");
+            Timing.waitCondition(new BooleanSupplier() {
+                @Override
+                public boolean getAsBoolean() {
+                    return GrandExchange.getWindowState() == GrandExchange.WINDOW_STATE.OFFER_WINDOW;
+                }
+            }, General.random(2000, 4000));
+            if(GrandExchange.getWindowState() != GrandExchange.WINDOW_STATE.OFFER_WINDOW)
+                continue;
+            RSItem[] items = GrandExchange.getCollectItems();
+            GrandExchange.collectItems(GrandExchange.COLLECT_METHOD.BANK, items);
+            GrandExchange.goToSelectionWindow(true);
+            General.sleep(300, 700);
+        }
+    }
+
     public boolean executeOffer(){
         boolean sell;
         if(type == Type.BUY)
@@ -137,7 +158,8 @@ public class Offer {
                 price -= 1;
                 if(price == 0)
                     price = 1;
-                return GrandExchange.offer(itemName, price, quantity, sell);
+                if(!GrandExchange.offer(itemName, price, quantity, sell))
+                    return false;
             }
             else{//buying an item
                 if(!newOfferWindow(Type.BUY))//failed to open the new offer window
@@ -165,10 +187,17 @@ public class Offer {
                     return false;//you have no money u dumb fuck
                 if(price > coins)
                     price = coins;
-                return GrandExchange.offer(itemName, price, quantity, sell);
+                if(!GrandExchange.offer(itemName, price, quantity, sell))
+                    return false;
             }
         }
-        else
-            return GrandExchange.offer(itemName, price, quantity, sell);
+        else {
+            if (!GrandExchange.offer(itemName, price, quantity, sell))
+                return false;
+        }
+
+        General.sleep(1000, 2000);
+        collectOffer();
+        return true;
     }
 }
