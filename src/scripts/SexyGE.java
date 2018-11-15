@@ -27,6 +27,11 @@ public class SexyGE extends Script {
         LinkedList<Node> nodes = new LinkedList<Node>();
         Collections.addAll(nodes, new WalkToGE(), new MakeOffer());
         Offers.addOffer(new Offer(Offer.Type.BUY, 1, -2, "Bones"));
+        Offers.addOffer(new Offer(Offer.Type.BUY, 1, -2, "Bones"));
+        Offers.addOffer(new Offer(Offer.Type.BUY, 1, -2, "Bones"));
+        Offers.addOffer(new Offer(Offer.Type.BUY, 1, -2, "Bones"));
+        Offers.addOffer(new Offer(Offer.Type.BUY, 1, -2, "Bones"));
+        Offers.addOffer(new Offer(Offer.Type.BUY, 1, -2, "Bucket"));
         while(true){
             for(Node node : nodes){
                 if(node.validate())

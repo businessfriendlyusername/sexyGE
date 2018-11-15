@@ -120,7 +120,10 @@ public class Offer {
     }
 
     private void collectOffer(){
-        for(OfferSlot slot : BelvisGE.getAllCompleteOffers()){
+        OfferSlot[] slots = BelvisGE.getAllCompleteOffers();
+        if(slots == null)
+            return;
+        for(OfferSlot slot : slots){
             RSInterface slotInterface = Interfaces.get(BelvisGE.GEInterfaceID, slot.getSlotInterfaceChildID(), slot.getViewID());
             if(slotInterface == null)
                 return;
@@ -136,7 +139,7 @@ public class Offer {
             RSItem[] items = GrandExchange.getCollectItems();
             GrandExchange.collectItems(GrandExchange.COLLECT_METHOD.BANK, items);
             GrandExchange.goToSelectionWindow(true);
-            General.sleep(300, 700);
+            General.sleep(500, 800);
         }
     }
 
